@@ -1,0 +1,122 @@
+[
+  {
+    "id": 1,
+    "invoiceDate": "2023-06-01T00:00:00.000Z",
+    "totalAmount": 100.0,
+    "status": "Paid"
+  },
+  {
+    "id": 2,
+    "invoiceDate": "2023-06-02T00:00:00.000Z",
+    "totalAmount": 250.5,
+    "status": "Pending"
+  },
+  {
+    "id": 3,
+    "invoiceDate": "2023-06-03T00:00:00.000Z",
+    "totalAmount": 75.2,
+    "status": "Paid"
+  },
+  {
+    "id": 3,
+    "invoiceDate": "2023-06-03T00:00:00.000Z",
+    "totalAmount": 75.2,
+    "status": "Paid"
+  },
+  {
+    "id": 3,
+    "invoiceDate": "2023-06-03T00:00:00.000Z",
+    "totalAmount": 75.2,
+    "status": "Paid"
+  },
+  {
+    "id": 3,
+    "invoiceDate": "2023-06-03T00:00:00.000Z",
+    "totalAmount": 75.2,
+    "status": "Paid"
+  },
+  {
+    "id": 3,
+    "invoiceDate": "2023-06-03T00:00:00.000Z",
+    "totalAmount": 75.2,
+    "status": "Paid"
+  },
+  {
+    "id": 3,
+    "invoiceDate": "2023-06-03T00:00:00.000Z",
+    "totalAmount": 75.2,
+    "status": "Paid"
+  },
+  {
+    "id": 3,
+    "invoiceDate": "2023-06-03T00:00:00.000Z",
+    "totalAmount": 75.2,
+    "status": "Paid"
+  },
+  {
+    "id": 3,
+    "invoiceDate": "2023-06-03T00:00:00.000Z",
+    "totalAmount": 75.2,
+    "status": "Paid"
+  },
+  {
+    "id": 3,
+    "invoiceDate": "2023-06-03T00:00:00.000Z",
+    "totalAmount": 75.2,
+    "status": "Paid"
+  },
+  {
+    "id": 3,
+    "invoiceDate": "2023-06-03T00:00:00.000Z",
+    "totalAmount": 75.2,
+    "status": "Paid"
+  },
+  {
+    "id": 3,
+    "invoiceDate": "2023-06-03T00:00:00.000Z",
+    "totalAmount": 75.2,
+    "status": "Paid"
+  },
+  {
+    "id": 3,
+    "invoiceDate": "2023-06-03T00:00:00.000Z",
+    "totalAmount": 75.2,
+    "status": "Paid"
+  },
+  {
+    "id": 3,
+    "invoiceDate": "2023-06-03T00:00:00.000Z",
+    "totalAmount": 75.2,
+    "status": "Paid"
+  },
+  {
+    "id": 3,
+    "invoiceDate": "2023-06-03T00:00:00.000Z",
+    "totalAmount": 75.2,
+    "status": "Paid"
+  },
+  {
+    "id": 3,
+    "invoiceDate": "2023-06-03T00:00:00.000Z",
+    "totalAmount": 75.2,
+    "status": "Paid"
+  },
+  {
+    "id": 3,
+    "invoiceDate": "2023-06-03T00:00:00.000Z",
+    "totalAmount": 75.2,
+    "status": "Paid"
+  },
+  {
+    "id": 3,
+    "invoiceDate": "2023-06-03T00:00:00.000Z",
+    "totalAmount": 75.2,
+    "status": "Paid"
+  },
+  {
+    "id": 3,
+    "invoiceDate": "2023-06-03T00:00:00.000Z",
+    "totalAmount": 75.2,
+    "status": "Paid"
+  }
+]
