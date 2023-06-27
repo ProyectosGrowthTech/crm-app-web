@@ -1,7 +1,7 @@
 import React from 'react';
-import TableExample from './table';
+import TableExample from '../components/table';
 
-const InvoiceComponent = () => {
+const InvoicePage = () => {
   // Table component content goes here
   return (
     <>
@@ -11,4 +11,4 @@ const InvoiceComponent = () => {
   );
 };
 
-export default InvoiceComponent;
+export default InvoicePage;
