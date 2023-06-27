@@ -7,7 +7,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
-import { Invoice } from './types/invoice';
+import { Invoice } from '../types/invoice';
 
 interface Column {
   id: keyof Invoice;
@@ -52,6 +52,7 @@ export default function StickyHeadTable() {
             <TableRow>
               {columns.map((column) => (
                 <TableCell
+                  sx={{ backgroundColor: '#3B82F6', color: 'white', fontWeight: 'bold' }}
                   key={column.id}
                   align={column.align}
                   style={{ minWidth: column.minWidth }}

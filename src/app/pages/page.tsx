@@ -1,6 +1,9 @@
 'use client'
 import React, { useState } from 'react';
-import Invoices from './invoices';
+import InvoicePage from './invoices';
+import HomePage from './home';
+import ContactPage from './contact';
+
 
 const Page = () => {
   const [activeSection, setActiveSection] = useState('home');
@@ -13,19 +16,22 @@ const Page = () => {
     switch (activeSection) {
       case 'home':
         return (
-          <div className="flex items-start">
-            <div className="w-1/2">Home component</div>
+          <div className="pt-4">
+            <HomePage />
           </div>
         );
       case 'invoices':
         return (
           <div className="pt-4">
-            <Invoices />
+            <InvoicePage />
           </div>
         );
       case 'contact':
-        return <div>Contact component</div>;
-      // Agrega más casos para otros elementos
+        return (
+          <div className="pt-4">
+            <ContactPage />
+          </div>
+        )
       default:
         return null;
     }
