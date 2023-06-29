@@ -23,9 +23,21 @@ export default function StickyHeadTable() {
   const [invoices, setInvoices] = React.useState<Invoice[]>([]);
 
   React.useEffect(() => {
-    fetch('/fixtures/invoice.json') // Adjust the path based on your project's file structure
-      .then((response) => response.json())
-      .then((data) => setInvoices(data));
+    const fetchData = async () => {
+      try {
+        const response = await fetch('http://localhost:8082/v1/invoice/?page=0&pageSize=10', {
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        });
+        const data = await response.json();
+        setInvoices(data);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+
+    fetchData();
   }, []);
 
   const handleChangePage = (event: unknown, newPage: number) => {
