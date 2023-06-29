@@ -8,6 +8,8 @@ import TableHead from '@mui/material/TableHead';
 import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
 import { Invoice } from '../types/invoice';
+import { ChangeEvent } from 'react';
+import { InvoiceDTO } from '../types/invoiceDto';
 
 interface Column {
   id: keyof Invoice;
@@ -20,34 +22,43 @@ interface Column {
 export default function StickyHeadTable() {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
-  const [invoices, setInvoices] = React.useState<Invoice[]>([]);
+  const [invoices, setInvoices] = React.useState<InvoiceDTO>({ invoiceList: [], totalInvoices: 0 });
+
+  const fetchData = async (page = 0, pageSize = 10) => {
+    try {
+      const url = `http://localhost:8082/v1/invoice/?page=${page}&pageSize=${pageSize}`;
+      const response = await fetch(url, {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+      const data = await response.json();
+      setInvoices(data); // Set the entire data object
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  };
 
   React.useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch('http://localhost:8082/v1/invoice/?page=0&pageSize=10', {
-          headers: {
-            'Content-Type': 'application/json'
-          }
-        });
-        const data = await response.json();
-        setInvoices(data);
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      }
-    };
-
     fetchData();
   }, []);
 
+
+
+
+
   const handleChangePage = (event: unknown, newPage: number) => {
     setPage(newPage);
+    fetchData(newPage, rowsPerPage);
   };
 
-  const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setRowsPerPage(+event.target.value);
-    setPage(0);
+  const handleChangeRowsPerPage = (event: ChangeEvent<HTMLInputElement>) => {
+    const newRowsPerPage = parseInt(event.target.value, 10);
+    setRowsPerPage(newRowsPerPage);
+    setPage(0); // Reset page to 0 when changing rows per page
+    fetchData(0, newRowsPerPage);
   };
+
 
   const columns: Column[] = [
     { id: 'id', label: 'ID', minWidth: 100 },
@@ -75,29 +86,35 @@ export default function StickyHeadTable() {
             </TableRow>
           </TableHead>
           <TableBody>
-            {invoices
-              .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-              .map((invoice) => (
-                <TableRow key={invoice.id}>
-                  {columns.map((column) => {
-                    const value = invoice[column.id];
-                    return (
-                      <TableCell key={column.id} align={column.align}>
-                        {column.format && typeof value === 'number'
-                          ? column.format(value)
-                          : String(value)} {/* Convert Date values to strings */}
-                      </TableCell>
-                    );
-                  })}
-                </TableRow>
-              ))}
+            {invoices.invoiceList.length > 0 ? (
+              invoices.invoiceList
+                .map((invoice) => (
+                  <TableRow key={invoice.id}>
+                    {columns.map((column) => {
+                      const value = invoice[column.id];
+                      return (
+                        <TableCell key={column.id} align={column.align}>
+                          {column.format && typeof value === 'number'
+                            ? column.format(value)
+                            : String(value)}
+                        </TableCell>
+                      );
+                    })}
+                  </TableRow>
+                ))
+            ) : (
+              <TableRow>
+                <TableCell colSpan={columns.length}>Loading...</TableCell>
+              </TableRow>
+            )}
           </TableBody>
+
         </Table>
       </TableContainer>
       <TablePagination
         rowsPerPageOptions={[10, 25, 100]}
         component="div"
-        count={invoices.length}
+        count={invoices.totalInvoices}
         rowsPerPage={rowsPerPage}
         page={page}
         onPageChange={handleChangePage}
