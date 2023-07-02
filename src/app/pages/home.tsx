@@ -1,13 +1,13 @@
 import React from 'react';
+import { Typography } from '@mui/material';
 
 const HomePage = () => {
   // Table component content goes here
   return (
-    <>
-      <div className="flex items-start">
-        <div className="w-1/2">Home page</div>
-      </div>
-    </>
+    <><Typography variant="h5">
+      Home page
+    </Typography></>
+
   );
 };
 

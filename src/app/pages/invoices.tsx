@@ -1,11 +1,17 @@
 import React from 'react';
 import TableExample from '../components/table';
+import { Typography } from '@mui/material';
+import Box from '@mui/material/Box';
+
 
 const InvoicePage = () => {
   // Table component content goes here
   return (
     <>
-      <h1 className="mb-3 text-2xl font-semibold">Sold invoices</h1>
+      <Typography variant="h5">
+        Sold invoices
+      </Typography>
+      <Box mt={4} /> {/* Use mt={4} for margin */}
       <TableExample />
     </>
   );
