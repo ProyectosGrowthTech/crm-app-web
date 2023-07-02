@@ -1,13 +1,12 @@
 import React from 'react';
+import { Typography } from '@mui/material';
 
 const ContactPage = () => {
   // Table component content goes here
   return (
-    <>
-      <div className="flex items-start">
-        <div className="w-1/2">Contact page</div>
-      </div>
-    </>
+    <Typography variant="h5">
+      Contact page
+    </Typography>
   );
 };
 

@@ -7,11 +7,14 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
+import { InvoiceDTO } from '../types/invoiceDTO';
 import { Invoice } from '../types/invoice';
 import { ChangeEvent } from 'react';
-import { InvoiceDTO } from '../types/invoiceDto';
 import { getInvoices } from '../api/invoice'
 import { invoiceTableColumns } from '../constants/tableColumns';
+import { useTheme, Theme } from '@mui/material/styles';
+import theme from '../styles/theme'
+
 
 export default function StickyHeadTable() {
   const [page, setPage] = React.useState(0);
@@ -51,7 +54,11 @@ export default function StickyHeadTable() {
             <TableRow>
               {invoiceTableColumns.map((column) => (
                 <TableCell
-                  sx={{ backgroundColor: '#3B82F6', color: 'white', fontWeight: 'bold' }}
+                  sx={{
+                    backgroundColor: theme.palette.primary.main,
+                    color: theme.palette.primary.contrastText,
+                    fontWeight: theme.typography.fontWeightBold
+                  }}
                   key={column.id}
                   align={column.align}
                   style={{ minWidth: column.minWidth }}
