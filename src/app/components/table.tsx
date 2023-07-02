@@ -10,62 +10,38 @@ import TableRow from '@mui/material/TableRow';
 import { Invoice } from '../types/invoice';
 import { ChangeEvent } from 'react';
 import { InvoiceDTO } from '../types/invoiceDto';
-
-interface Column {
-  id: keyof Invoice;
-  label: string;
-  minWidth?: number;
-  align?: 'right';
-  format?: (value: number) => string;
-}
+import { getInvoices } from '../api/invoice'
+import { invoiceTableColumns } from '../constants/tableColumns';
 
 export default function StickyHeadTable() {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const [invoices, setInvoices] = React.useState<InvoiceDTO>({ invoiceList: [], totalInvoices: 0 });
 
-  const fetchData = async (page = 0, pageSize = 10) => {
-    try {
-      const url = `http://localhost:8082/v1/invoice/?page=${page}&pageSize=${pageSize}`;
-      const response = await fetch(url, {
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      });
-      const data = await response.json();
-      setInvoices(data); // Set the entire data object
-    } catch (error) {
-      console.error('Error fetching data:', error);
-    }
-  };
-
   React.useEffect(() => {
-    fetchData();
-  }, []);
+    const loadData = async () => {
+      try {
+        const data = await getInvoices(page, rowsPerPage);
+        setInvoices(data);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
 
-
-
-
+    loadData();
+  }, [page, rowsPerPage]);
 
   const handleChangePage = (event: unknown, newPage: number) => {
     setPage(newPage);
-    fetchData(newPage, rowsPerPage);
+    getInvoices(newPage, rowsPerPage);
   };
 
   const handleChangeRowsPerPage = (event: ChangeEvent<HTMLInputElement>) => {
     const newRowsPerPage = parseInt(event.target.value, 10);
     setRowsPerPage(newRowsPerPage);
     setPage(0); // Reset page to 0 when changing rows per page
-    fetchData(0, newRowsPerPage);
+    getInvoices(0, newRowsPerPage);
   };
-
-
-  const columns: Column[] = [
-    { id: 'id', label: 'ID', minWidth: 100 },
-    { id: 'invoiceDate', label: 'Invoice Date', minWidth: 170 },
-    { id: 'totalAmount', label: 'Total Amount', minWidth: 150 },
-    { id: 'status', label: 'Status', minWidth: 150 },
-  ];
 
   return (
     <Paper sx={{ width: '100%', overflow: 'hidden' }}>
@@ -73,7 +49,7 @@ export default function StickyHeadTable() {
         <Table stickyHeader aria-label="sticky table">
           <TableHead>
             <TableRow>
-              {columns.map((column) => (
+              {invoiceTableColumns.map((column) => (
                 <TableCell
                   sx={{ backgroundColor: '#3B82F6', color: 'white', fontWeight: 'bold' }}
                   key={column.id}
@@ -90,7 +66,7 @@ export default function StickyHeadTable() {
               invoices.invoiceList
                 .map((invoice) => (
                   <TableRow key={invoice.id}>
-                    {columns.map((column) => {
+                    {invoiceTableColumns.map((column) => {
                       const value = invoice[column.id];
                       return (
                         <TableCell key={column.id} align={column.align}>
@@ -104,7 +80,7 @@ export default function StickyHeadTable() {
                 ))
             ) : (
               <TableRow>
-                <TableCell colSpan={columns.length}>Loading...</TableCell>
+                <TableCell colSpan={invoiceTableColumns.length}>Loading...</TableCell>
               </TableRow>
             )}
           </TableBody>
