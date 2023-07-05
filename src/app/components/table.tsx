@@ -8,12 +8,12 @@ import TableHead from '@mui/material/TableHead';
 import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
 import { InvoiceDTO } from '../types/invoiceDTO';
-import { Invoice } from '../types/invoice';
 import { ChangeEvent } from 'react';
 import { getInvoices } from '../api/invoice'
 import { invoiceTableColumns } from '../constants/tableColumns';
-import { useTheme, Theme } from '@mui/material/styles';
 import theme from '../styles/theme'
+import { format } from 'date-fns';
+
 
 
 export default function StickyHeadTable() {
@@ -30,7 +30,6 @@ export default function StickyHeadTable() {
         console.error('Error fetching data:', error);
       }
     };
-
     loadData();
   }, [page, rowsPerPage]);
 
@@ -45,6 +44,17 @@ export default function StickyHeadTable() {
     setPage(0); // Reset page to 0 when changing rows per page
     getInvoices(0, newRowsPerPage);
   };
+
+  // Helper function to format the date as "mm/dd/yyyy"
+  const formatDate = (date: Date) => {
+    console.log('Holaa');
+    return format(new Date(date), 'MM/dd/yyyy');
+  };
+
+  const logObject = (obj: Object) => {
+    console.log(typeof obj);
+    return obj.toString();
+  }
 
   return (
     <Paper sx={{ width: '100%', overflow: 'hidden' }}>
@@ -70,27 +80,30 @@ export default function StickyHeadTable() {
           </TableHead>
           <TableBody>
             {invoices.invoiceList.length > 0 ? (
-              invoices.invoiceList
-                .map((invoice) => (
-                  <TableRow key={invoice.id}>
-                    {invoiceTableColumns.map((column) => {
-                      const value = invoice[column.id];
-                      return (
-                        <TableCell key={column.id} align={column.align}>
-                          {column.format && typeof value === 'number'
-                            ? column.format(value)
-                            : String(value)}
-                        </TableCell>
-                      );
-                    })}
-                  </TableRow>
-                ))
+              invoices.invoiceList.map((invoice) => (
+                <TableRow key={invoice.id}>
+                  {invoiceTableColumns.map((column) => {
+                    const value = invoice[column.id];
+                    return (
+                      <TableCell key={column.id} align={column.align}>
+                        {value instanceof Date ? (
+                          formatDate(value)
+                        ) : (
+                          logObject(value)
+                        )}
+                      </TableCell>
+                    );
+                  })}
+                </TableRow>
+              ))
             ) : (
               <TableRow>
                 <TableCell colSpan={invoiceTableColumns.length}>Loading...</TableCell>
               </TableRow>
             )}
           </TableBody>
+
+
 
         </Table>
       </TableContainer>

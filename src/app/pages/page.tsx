@@ -7,17 +7,9 @@ import YourAppBar from '../components/appBar';
 const theme = createTheme();
 
 const Page = () => {
-  const [activeSection, setActiveSection] = useState('home');
-
-  const handleSectionChange = (section: string) => {
-    setActiveSection(section);
-  };
-
-
-
   return (
     <ThemeProvider theme={theme}>
-      <YourAppBar handleSectionChange={handleSectionChange} activeSection={activeSection} />
+      <YourAppBar />
 
       <main style={{ display: 'flex', minHeight: '100vh', flexDirection: 'column', alignItems: 'flex-start', padding: 0 }}>
         <div style={{ margin: '0 auto', marginTop: 0 }}>

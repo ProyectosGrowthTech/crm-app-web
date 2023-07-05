@@ -3,15 +3,12 @@ import { Typography, useTheme } from '@mui/material';
 import Button from '@mui/material/Button';
 import AddIcon from '@mui/icons-material/Add';
 import Box from '@mui/material/Box';
+import Modal from '@mui/material/Modal';
 import TextField from '@mui/material/TextField';
 import ListItem from '@mui/material/ListItem';
 import List from '@mui/material/List';
 import SaveIcon from '@mui/icons-material/Save';
 import { ChangeEvent } from 'react';
-import { postAddress } from '../api/address';
-import { Address } from '../types/address';
-import { Modal } from '@mui/material'
-import BasicModal from "../components/modal"
 
 const style = {
   position: 'absolute' as 'absolute',
@@ -24,43 +21,37 @@ const style = {
   p: 4,
 };
 
-const AddressesPage = () => {
+const StakeholdersPage = () => {
   const theme = useTheme();
   const [open, setOpen] = useState(false);
-  const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [formData, setFormData] = useState({
-    addressLine: '',
-    city: '',
-    postalCode: '',
-    country: '',
-    addressName: '',
-    state: ''
+    name: '',
+    type: '',
+    id: '',
+    email: '',
+    phone: '',
+    businessAddress: '',
+    taxAddress: ''
   });
 
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
-  const handleSave = async () => {
-    // Perform any validation or data processing here before saving
-    const newAddress: Address = formData as Address;
+  const handleSave = () => {
+    console.log(formData);
 
-    const response = await postAddress(newAddress);
-    console.log(response);
+    // Clear the form data
+    setFormData({
+      name: '',
+      type: '',
+      id: '',
+      email: '',
+      phone: '',
+      businessAddress: '',
+      taxAddress: ''
+    });
 
-
-    if (response) {
-      setShowSuccessModal(true);
-      // Clear the form data
-      setFormData({
-        addressLine: '',
-        city: '',
-        postalCode: '',
-        country: '',
-        addressName: '',
-        state: ''
-      });
-      handleClose();
-    }
+    handleClose();
   };
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -72,7 +63,7 @@ const AddressesPage = () => {
 
   return (
     <>
-      <Typography variant="h5">Addresses</Typography>
+      <Typography variant="h5">Stakeholders</Typography>
       <Box mt={4} />
       <Button
         variant="contained"
@@ -95,82 +86,89 @@ const AddressesPage = () => {
         <Box sx={style}>
           <React.Fragment>
             <Typography variant="h6" gutterBottom>
-              New address
+              New Stakeholder
             </Typography>
             <List>
               <ListItem>
                 <TextField
                   required
-                  id="addressName"
-                  name="addressName"
-                  label="Address Name"
+                  id="id"
+                  name="id"
+                  label="Identification code"
+                  fullWidth
+                  variant="standard"
+                  value={formData.id}
+                  onChange={handleChange}
+                />
+              </ListItem>
+              <ListItem>
+                <TextField
+                  required
+                  id="name"
+                  name="name"
+                  label="Name"
                   fullWidth
                   autoComplete="family-name"
                   variant="standard"
-                  value={formData.addressName}
+                  value={formData.name}
                   onChange={handleChange}
                 />
               </ListItem>
               <ListItem>
                 <TextField
                   required
-                  id="addressLine"
-                  name="addressLine"
-                  label="Address line"
+                  id="type"
+                  name="type"
+                  label="Type"
                   fullWidth
-                  autoComplete="shipping address-line1"
                   variant="standard"
-                  value={formData.addressLine}
+                  value={formData.type}
+                  onChange={handleChange}
+                />
+              </ListItem>
+              <ListItem>
+                <TextField
+                  id="email"
+                  name="email"
+                  label="Email"
+                  fullWidth
+                  variant="standard"
+                  value={formData.email}
                   onChange={handleChange}
                 />
               </ListItem>
               <ListItem>
                 <TextField
                   required
-                  id="city"
-                  name="city"
-                  label="City"
+                  id="phone"
+                  name="phone"
+                  label="Phone"
                   fullWidth
-                  autoComplete="shipping address-level2"
                   variant="standard"
-                  value={formData.city}
+                  value={formData.phone}
                   onChange={handleChange}
                 />
               </ListItem>
               <ListItem>
                 <TextField
-                  id="state"
+                  id="businessAddress"
                   name="state"
                   label="State/Province/Region"
                   fullWidth
                   variant="standard"
-                  value={formData.state}
+                  value={formData.businessAddress}
                   onChange={handleChange}
                 />
               </ListItem>
               <ListItem>
                 <TextField
                   required
-                  id="postalCode"
-                  name="postalCode"
-                  label="Zip / Postal code"
+                  id="taxAddress"
+                  name="taxAddress"
+                  label="Tax Address"
                   fullWidth
-                  autoComplete="shipping postal-code"
                   variant="standard"
-                  value={formData.postalCode}
-                  onChange={handleChange}
-                />
-              </ListItem>
-              <ListItem>
-                <TextField
-                  required
-                  id="country"
-                  name="country"
-                  label="Country"
-                  fullWidth
-                  autoComplete="shipping country"
-                  variant="standard"
-                  value={formData.country}
+                  value={formData.taxAddress}
                   onChange={handleChange}
                 />
               </ListItem>
@@ -192,11 +190,8 @@ const AddressesPage = () => {
           </React.Fragment>
         </Box>
       </Modal>
-      {showSuccessModal && (
-        <BasicModal message="Address inserted correctly" handleClose={() => setShowSuccessModal(false)} />
-      )}
     </>
   );
 };
 
-export default AddressesPage;
+export default StakeholdersPage;
