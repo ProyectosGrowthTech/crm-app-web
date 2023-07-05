@@ -19,8 +19,9 @@ import ContactPage from '../pages/contact';
 import theme from '../styles/theme'
 
 import HomePage from '../pages/home';
+import StakeholderesPage from '../pages/stakeholders';
 
-const pages = ['Invoices', 'Addresses', 'Contact'];
+const pages = ['Invoices', 'Addresses', 'Stakeholders', 'Contact'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
 function ResponsiveAppBar() {
@@ -192,6 +193,7 @@ function ResponsiveAppBar() {
                 <Routes>
                     <Route path="/invoices" element={<InvoicePage></InvoicePage>} />
                     <Route path="/addresses" element={<AddressesPage></AddressesPage>} />
+                    <Route path="/stakeholders" element={<StakeholderesPage></StakeholderesPage>} />
                     <Route path="/contact" element={<ContactPage></ContactPage>} />
                 </Routes>
 

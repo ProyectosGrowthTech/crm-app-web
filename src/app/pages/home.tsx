@@ -4,10 +4,9 @@ import { Typography } from '@mui/material';
 const HomePage = () => {
   // Table component content goes here
   return (
-    <><Typography variant="h5">
+    <Typography variant="h5">
       Home page
-    </Typography></>
-
+    </Typography>
   );
 };
 
