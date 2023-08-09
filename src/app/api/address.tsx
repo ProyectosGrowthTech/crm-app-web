@@ -22,3 +22,22 @@ export async function postAddress(address: Address) {
     throw error;
   }
 }
+
+export async function getAddress(page = 0, pageSize = 10) {
+  try {
+    const url = `http://localhost:8082/v1/address/?page=${page}&pageSize=${pageSize}`;
+    const response = await fetch(url, {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+    const data = await response.json();
+
+    console.log('API Response:', data); // Add this line to check the response data
+
+    return data;
+  } catch (error) {
+    console.error('Error fetching data1:', error);
+    throw error;
+  }
+}
