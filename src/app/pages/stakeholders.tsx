@@ -8,6 +8,11 @@ import TextField from '@mui/material/TextField';
 import ListItem from '@mui/material/ListItem';
 import List from '@mui/material/List';
 import SaveIcon from '@mui/icons-material/Save';
+import MenuItem from '@mui/material/MenuItem';
+import { getAddress } from '../api/address'
+import { Address } from '../types/address';
+
+
 import { ChangeEvent } from 'react';
 
 const style = {
@@ -34,6 +39,26 @@ const StakeholdersPage = () => {
     taxAddress: ''
   });
 
+  const [addressList, setAddressList] = useState<Address[]>([]);
+
+  React.useEffect(() => {
+    async function fetchData() {
+      try {
+        console.log('Fetching data...');
+        const data = await getAddress();
+        setAddressList(data);
+        console.log('Data fetched is ' + addressList[0].addressLine)
+      } catch (error) {
+        console.error('Error fetching data:', error);
+        // Handle error
+      }
+    }
+
+    fetchData();
+  }, []);
+
+
+
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
@@ -53,6 +78,22 @@ const StakeholdersPage = () => {
 
     handleClose();
   };
+
+  const stakeHolderTypes = [
+    {
+      value: '1',
+      label: 'Customer',
+    },
+    {
+      value: '2',
+      label: 'Supplier',
+    },
+    {
+      value: '3',
+      label: 'Partner',
+    }
+  ];
+
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setFormData((prevFormData) => ({
@@ -118,13 +159,20 @@ const StakeholdersPage = () => {
                 <TextField
                   required
                   id="type"
+                  select
                   name="type"
                   label="Type"
                   fullWidth
                   variant="standard"
                   value={formData.type}
                   onChange={handleChange}
-                />
+                >
+                  {stakeHolderTypes.map((option) => (
+                    <MenuItem key={option.value} value={option.value}>
+                      {option.label}
+                    </MenuItem>
+                  ))}
+                </TextField>
               </ListItem>
               <ListItem>
                 <TextField
@@ -152,25 +200,39 @@ const StakeholdersPage = () => {
               <ListItem>
                 <TextField
                   id="businessAddress"
+                  select
                   name="state"
-                  label="State/Province/Region"
+                  label="Business address"
                   fullWidth
                   variant="standard"
                   value={formData.businessAddress}
                   onChange={handleChange}
-                />
+                >
+                  {addressList.map((option) => (
+                    <MenuItem key={option.id} value={option.id}>
+                      {option.addressName}
+                    </MenuItem>
+                  ))}
+                </TextField>
               </ListItem>
               <ListItem>
                 <TextField
                   required
                   id="taxAddress"
+                  select
                   name="taxAddress"
                   label="Tax Address"
                   fullWidth
                   variant="standard"
                   value={formData.taxAddress}
                   onChange={handleChange}
-                />
+                >
+                  {addressList.map((option) => (
+                    <MenuItem key={option.id} value={option.id}>
+                      {option.addressName}
+                    </MenuItem>
+                  ))}
+                </TextField>
               </ListItem>
               {/* Rest of the form fields with value and onChange */}
             </List>
