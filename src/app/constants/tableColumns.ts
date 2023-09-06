@@ -13,4 +13,5 @@ export const invoiceTableColumns: Column[] = [
     { id: 'invoiceDate', label: 'Invoice Date', minWidth: 170 },
     { id: 'totalAmount', label: 'Total Amount', minWidth: 150 },
     { id: 'status', label: 'Status', minWidth: 150 },
+    { id: 'invoiceType', label: 'Type', minWidth: 150 },
 ];
