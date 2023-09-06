@@ -3,4 +3,5 @@ export interface Invoice {
   invoiceDate: Date;
   totalAmount: number;
   status: string;
+  invoiceType: number;
 }
