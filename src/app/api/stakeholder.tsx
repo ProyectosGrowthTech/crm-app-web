@@ -1,14 +1,14 @@
-import { Address } from "../types/address"
+import { Stakeholder } from "../types/stakeholder"
 
-export async function postAddress(address: Address) {
+export async function postStakeholder(stakeholder: Stakeholder) {
   try {
-    const url = 'http://localhost:8082/v1/address/';
+    const url = 'http://localhost:8082/v1/stakeholder/';
     const response = await fetch(url, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify(address)
+      body: JSON.stringify(stakeholder)
     });
 
     if (!response.ok) {
@@ -23,9 +23,9 @@ export async function postAddress(address: Address) {
   }
 }
 
-export async function getAddresses(page = 0, pageSize = 10) {
+export async function getStakeholders(page = 0, pageSize = 10) {
   try {
-    const url = `http://localhost:8082/v1/address/?page=${page}&pageSize=${pageSize}`;
+    const url = `http://localhost:8082/v1/stakeholder/?page=${page}&pageSize=${pageSize}`;
     const response = await fetch(url, {
       headers: {
         'Content-Type': 'application/json',
@@ -42,9 +42,9 @@ export async function getAddresses(page = 0, pageSize = 10) {
   }
 }
 
-export async function getAllAddresses() {
+export async function getAllStakeholders() {
   try {
-    const url = `http://localhost:8082/v1/address/all`;
+    const url = `http://localhost:8082/v1/stakeholder/all`;
     const response = await fetch(url, {
       headers: {
         'Content-Type': 'application/json',

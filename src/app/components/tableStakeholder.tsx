@@ -7,25 +7,25 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
-import { AddressDTO } from '../types/addressDTO';
 import { ChangeEvent } from 'react';
-import { getAddresses } from '../api/address'
-import { addressTableColumns } from '../constants/addressTableColumns';
+import { stakeholderTableColumns } from '../constants/stakeholderTableColumns';
 import theme from '../styles/theme'
 import { format } from 'date-fns';
+import { StakeholderDTO } from '../types/stakeholderDTO';
+import { getStakeholders } from '../api/stakeholder';
 
 
 
 export default function StickyHeadTable() {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
-  const [addresses, setAddresses] = React.useState<AddressDTO>({ addressList: [], totalAddresses: 0 });
+  const [stakeholders, setStakeholders] = React.useState<StakeholderDTO>({ stakeholderList: [], totalStakeholders: 0 });
 
   React.useEffect(() => {
     const loadData = async () => {
       try {
-        const data = await getAddresses(page, rowsPerPage);
-        setAddresses(data);
+        const data = await getStakeholders(page, rowsPerPage);
+        setStakeholders(data);
       } catch (error) {
         console.error('Error fetching data:', error);
       }
@@ -35,14 +35,14 @@ export default function StickyHeadTable() {
 
   const handleChangePage = (event: unknown, newPage: number) => {
     setPage(newPage);
-    getAddresses(newPage, rowsPerPage);
+    getStakeholders(newPage, rowsPerPage);
   };
 
   const handleChangeRowsPerPage = (event: ChangeEvent<HTMLInputElement>) => {
     const newRowsPerPage = parseInt(event.target.value, 10);
     setRowsPerPage(newRowsPerPage);
     setPage(0); // Reset page to 0 when changing rows per page
-    getAddresses(0, newRowsPerPage);
+    getStakeholders(0, newRowsPerPage);
   };
 
   // Helper function to format the date as "mm/dd/yyyy"
@@ -63,12 +63,12 @@ export default function StickyHeadTable() {
         <Table stickyHeader aria-label="sticky table">
           <TableHead>
             <TableRow>
-              {addressTableColumns.map((column) => (
+              {stakeholderTableColumns.map((column) => (
                 <TableCell
                   sx={{
                     backgroundColor: theme.palette.primary.main,
                     color: theme.palette.primary.contrastText,
-                    fontWeight: theme.typography.fontWeightBold
+                    fontWeight: theme.typography.fontWeightBold,
                   }}
                   key={column.id}
                   align={column.align}
@@ -80,34 +80,36 @@ export default function StickyHeadTable() {
             </TableRow>
           </TableHead>
           <TableBody>
-            {addresses.addressList.length > 0 ? (
-              addresses.addressList.map((address) => (
-                <TableRow key={address.id}>
-                  {addressTableColumns.map((column) => {
-                    const addressValue = address[column.id];
-                    return (
-                      <TableCell key={column.id} align={column.align}>
-                          {logObject(addressValue)}
-                      </TableCell>
-                    );
-                  })}
+            {stakeholders.stakeholderList.length > 0 ? (
+              stakeholders.stakeholderList.map((stakeholder) => (
+                <TableRow key={stakeholder.id}>
+                  {stakeholderTableColumns.map((column) => (
+                    <TableCell key={column.id} align={column.align}>
+                      {column.id === 'businessAddress' || column.id === 'taxAddress'
+                        ? stakeholder[column.id]?.addressName // Access the name property of businessAddress or taxAddress
+                        : column.id === 'stakeholderType'
+                          ? stakeholder.stakeholderType?.name // Access the name property of stakeholderType
+                          : String(stakeholder[column.id])} {/* Convert the property to a string */}
+                    </TableCell>
+
+                  ))}
                 </TableRow>
               ))
             ) : (
               <TableRow>
-                <TableCell colSpan={addressTableColumns.length}>Loading...</TableCell>
+                <TableCell colSpan={stakeholderTableColumns.length}>Loading...</TableCell>
               </TableRow>
             )}
           </TableBody>
-
-
-
         </Table>
       </TableContainer>
+
+
+
       <TablePagination
         rowsPerPageOptions={[10, 25, 100]}
         component="div"
-        count={addresses.totalAddresses}
+        count={stakeholders.totalStakeholders}
         rowsPerPage={rowsPerPage}
         page={page}
         onPageChange={handleChangePage}

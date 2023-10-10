@@ -1,7 +1,7 @@
 import { Invoice } from "../types/invoice";
 export async function getInvoices(page = 0, pageSize = 10) {
   try {
-    const url = `http://localhost:8080/v1/invoice/?page=${page}&pageSize=${pageSize}`;
+    const url = `http://localhost:8082/v1/invoice/?page=${page}&pageSize=${pageSize}`;
     const response = await fetch(url, {
       headers: {
         'Content-Type': 'application/json'

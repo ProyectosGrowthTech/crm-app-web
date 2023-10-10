@@ -1,3 +1,6 @@
+import { Address } from "./address";
+import { StakeholderType } from "./stakeholderType";
+
 export interface Stakeholder {
   id: number;
   name: string;
@@ -5,7 +8,7 @@ export interface Stakeholder {
   identificationCode: string;
   email: string;
   phone: string;
-  businessAddress: string;
-  taxAddress: string;
-  stakeholderType: string;
+  businessAddress: Address;
+  taxAddress: Address;
+  stakeholderType: StakeholderType;
 }

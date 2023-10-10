@@ -9,8 +9,14 @@ import ListItem from '@mui/material/ListItem';
 import List from '@mui/material/List';
 import SaveIcon from '@mui/icons-material/Save';
 import MenuItem from '@mui/material/MenuItem';
-import { getAllAddresses } from '../api/address'
+import { getStakeholders } from '../api/stakeholder'
+import { Stakeholder } from '../types/stakeholder';
+import { getAddresses, getAllAddresses } from '../api/address';
 import { Address } from '../types/address';
+import BasicModal from "../components/modal"
+import StakeholdersTable from '../components/tableStakeholder';
+
+
 
 
 import { ChangeEvent } from 'react';
@@ -29,6 +35,7 @@ const style = {
 const StakeholdersPage = () => {
   const theme = useTheme();
   const [open, setOpen] = useState(false);
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
     type: '',
@@ -39,15 +46,20 @@ const StakeholdersPage = () => {
     taxAddress: ''
   });
 
+  const [stakeholderList, setStakeholderList] = useState<Stakeholder[]>([]);
   const [addressList, setAddressList] = useState<Address[]>([]);
+
 
   React.useEffect(() => {
     async function fetchData() {
       try {
         console.log('Fetching data...');
-        const data = await getAllAddresses();
-        setAddressList(data.addressList);
-        console.log('Data fetched is ' + addressList[0].addressLine)
+        const addressData = await getAddresses();
+        setAddressList(addressData.addressList);
+        console.log('Data fetched is ' + addressData[2].addressName)
+        const stakeholderData = await getStakeholders();
+        setStakeholderList(stakeholderData.stakeholderList);
+        console.log('Data fetched is ' + stakeholderList[0].name)
       } catch (error) {
         console.error('Error fetching data:', error);
         // Handle error
@@ -252,6 +264,12 @@ const StakeholdersPage = () => {
           </React.Fragment>
         </Box>
       </Modal>
+      {showSuccessModal && (
+        <BasicModal message="Stakeholder inserted correctly" handleClose={() => setShowSuccessModal(false)} />
+      )}
+
+      <Box mt={4} /> {/* Use mt={4} for margin */}
+      <StakeholdersTable />
     </>
   );
 };
