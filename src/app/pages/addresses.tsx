@@ -12,6 +12,7 @@ import { postAddress } from '../api/address';
 import { Address } from '../types/address';
 import { Modal } from '@mui/material'
 import BasicModal from "../components/modal"
+import AddressessTable from '../components/tableAddress';
 
 const style = {
   position: 'absolute' as 'absolute',
@@ -195,6 +196,9 @@ const AddressesPage = () => {
       {showSuccessModal && (
         <BasicModal message="Address inserted correctly" handleClose={() => setShowSuccessModal(false)} />
       )}
+
+      <Box mt={4} /> {/* Use mt={4} for margin */}
+      <AddressessTable />
     </>
   );
 };

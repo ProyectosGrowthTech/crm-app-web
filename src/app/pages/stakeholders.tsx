@@ -9,7 +9,7 @@ import ListItem from '@mui/material/ListItem';
 import List from '@mui/material/List';
 import SaveIcon from '@mui/icons-material/Save';
 import MenuItem from '@mui/material/MenuItem';
-import { getAddress } from '../api/address'
+import { getAllAddresses } from '../api/address'
 import { Address } from '../types/address';
 
 
@@ -45,8 +45,8 @@ const StakeholdersPage = () => {
     async function fetchData() {
       try {
         console.log('Fetching data...');
-        const data = await getAddress();
-        setAddressList(data);
+        const data = await getAllAddresses();
+        setAddressList(data.addressList);
         console.log('Data fetched is ' + addressList[0].addressLine)
       } catch (error) {
         console.error('Error fetching data:', error);

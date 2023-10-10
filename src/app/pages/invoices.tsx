@@ -1,10 +1,10 @@
 import React from 'react';
-import TableExample from '../components/table';
+import InvoicesTable from '../components/tableInvoice';
 import { Typography } from '@mui/material';
 import Box from '@mui/material/Box';
 
 
-const InvoicePage = () => {
+const InvoicePage = () => { 
   // Table component content goes here
   return (
     <>
@@ -12,7 +12,7 @@ const InvoicePage = () => {
         Sold invoices
       </Typography>
       <Box mt={4} /> {/* Use mt={4} for margin */}
-      <TableExample />
+      <InvoicesTable />
     </>
   );
 };

@@ -7,10 +7,10 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
-import { InvoiceDTO } from '../types/invoiceDTO';
+import { AddressDTO } from '../types/addressDTO';
 import { ChangeEvent } from 'react';
-import { getInvoices } from '../api/invoice'
-import { invoiceTableColumns } from '../constants/tableColumns';
+import { getAddresses } from '../api/address'
+import { addressTableColumns } from '../constants/addressTableColumns';
 import theme from '../styles/theme'
 import { format } from 'date-fns';
 
@@ -19,13 +19,13 @@ import { format } from 'date-fns';
 export default function StickyHeadTable() {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
-  const [invoices, setInvoices] = React.useState<InvoiceDTO>({ invoiceList: [], totalInvoices: 0 });
+  const [addresses, setAddresses] = React.useState<AddressDTO>({ addressList: [], totalAddresses: 0 });
 
   React.useEffect(() => {
     const loadData = async () => {
       try {
-        const data = await getInvoices(page, rowsPerPage);
-        setInvoices(data);
+        const data = await getAddresses(page, rowsPerPage);
+        setAddresses(data);
       } catch (error) {
         console.error('Error fetching data:', error);
       }
@@ -35,25 +35,26 @@ export default function StickyHeadTable() {
 
   const handleChangePage = (event: unknown, newPage: number) => {
     setPage(newPage);
-    getInvoices(newPage, rowsPerPage);
+    getAddresses(newPage, rowsPerPage);
   };
 
   const handleChangeRowsPerPage = (event: ChangeEvent<HTMLInputElement>) => {
     const newRowsPerPage = parseInt(event.target.value, 10);
     setRowsPerPage(newRowsPerPage);
     setPage(0); // Reset page to 0 when changing rows per page
-    getInvoices(0, newRowsPerPage);
+    getAddresses(0, newRowsPerPage);
   };
 
   // Helper function to format the date as "mm/dd/yyyy"
   const formatDate = (date: Date) => {
-    console.log('Holaa');
     return format(new Date(date), 'MM/dd/yyyy');
   };
 
   const logObject = (obj: Object) => {
-    console.log(typeof obj);
-    return obj.toString();
+    if (obj != null)
+      return obj.toString();
+    else
+      return null;
   }
 
   return (
@@ -62,7 +63,7 @@ export default function StickyHeadTable() {
         <Table stickyHeader aria-label="sticky table">
           <TableHead>
             <TableRow>
-              {invoiceTableColumns.map((column) => (
+              {addressTableColumns.map((column) => (
                 <TableCell
                   sx={{
                     backgroundColor: theme.palette.primary.main,
@@ -79,18 +80,14 @@ export default function StickyHeadTable() {
             </TableRow>
           </TableHead>
           <TableBody>
-            {invoices.invoiceList.length > 0 ? (
-              invoices.invoiceList.map((invoice) => (
-                <TableRow key={invoice.id}>
-                  {invoiceTableColumns.map((column) => {
-                    const value = invoice[column.id];
+            {addresses.addressList.length > 0 ? (
+              addresses.addressList.map((address) => (
+                <TableRow key={address.id}>
+                  {addressTableColumns.map((column) => {
+                    const addressValue = address[column.id];
                     return (
                       <TableCell key={column.id} align={column.align}>
-                        {value instanceof Date ? (
-                          formatDate(value)
-                        ) : (
-                          logObject(value)
-                        )}
+                          {logObject(addressValue)}
                       </TableCell>
                     );
                   })}
@@ -98,7 +95,7 @@ export default function StickyHeadTable() {
               ))
             ) : (
               <TableRow>
-                <TableCell colSpan={invoiceTableColumns.length}>Loading...</TableCell>
+                <TableCell colSpan={addressTableColumns.length}>Loading...</TableCell>
               </TableRow>
             )}
           </TableBody>
@@ -110,7 +107,7 @@ export default function StickyHeadTable() {
       <TablePagination
         rowsPerPageOptions={[10, 25, 100]}
         component="div"
-        count={invoices.totalInvoices}
+        count={addresses.totalAddresses}
         rowsPerPage={rowsPerPage}
         page={page}
         onPageChange={handleChangePage}
