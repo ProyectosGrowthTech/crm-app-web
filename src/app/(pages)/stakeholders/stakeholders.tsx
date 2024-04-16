@@ -9,12 +9,12 @@ import ListItem from '@mui/material/ListItem';
 import List from '@mui/material/List';
 import SaveIcon from '@mui/icons-material/Save';
 import MenuItem from '@mui/material/MenuItem';
-import { getStakeholders } from '../api/stakeholder'
-import { Stakeholder } from '../types/stakeholder';
-import { getAddresses, getAllAddresses } from '../api/address';
-import { Address } from '../types/address';
-import BasicModal from "../components/modal"
-import StakeholdersTable from '../components/tableStakeholder';
+import { getStakeholders } from '../../api/stakeholder'
+import { Stakeholder } from '../../types/stakeholder';
+import { getAddresses, getAllAddresses } from '../../api/address';
+import { Address } from '../../types/address';
+import BasicModal from "../../components/modal"
+import StakeholdersTable from '../../components/tableStakeholder';
 
 
 

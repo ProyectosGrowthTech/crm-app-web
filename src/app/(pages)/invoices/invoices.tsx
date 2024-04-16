@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
 import { Typography, useTheme } from '@mui/material';
-import InvoicesTable from '../components/tableInvoice';
+import InvoicesTable from '../../components/tableInvoice';
 import Box from '@mui/material/Box';
-import InvoiceModal from '../components/modals/invoiceModal';
+import InvoiceModal from '../../components/modals/invoiceModal';
 import { ChangeEvent } from 'react';
-import BasicModal from "../components/modal"
+import BasicModal from "../../components/modal"
 import Button from '@mui/material/Button';
 import AddIcon from '@mui/icons-material/Add';
-import { Stakeholder } from '../types/stakeholder';
-import { getStakeholders } from '../api/stakeholder'
+import { Stakeholder } from '../../types/stakeholder';
+import { getStakeholders } from '../../api/stakeholder'
 
 const InvoicePage = () => {
   // Table component content goes here

@@ -4,15 +4,15 @@ import Button from '@mui/material/Button';
 import AddIcon from '@mui/icons-material/Add';
 import Box from '@mui/material/Box';
 import { ChangeEvent } from 'react';
-import { postAddress } from '../api/address';
-import { Address } from '../types/address';
-import AddressessTable from '../components/tableAddress';
-import AddAddressModal from '../components/modals/addressModal';
-import BasicModal from "../components/modal"
+import { postAddress } from '../../api/address';
+import { Address } from '../../types/address';
+import AddressessTable from '../../components/tableAddress';
+import AddAddressModal from '../../components/modals/addressModal';
+import BasicModal from "../../components/modal"
 
 
 const style = {
-  position: 'absolute' as 'absolute',
+  position: 'absolute' as 'absolute', 
   top: '50%',
   left: '50%',
   transform: 'translate(-50%, -50%)',

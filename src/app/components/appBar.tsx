@@ -12,14 +12,14 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import DashboardIcon from '@mui/icons-material/Dashboard';
-import InvoicePage from '../pages/invoices';
+import InvoicePage from '../(pages)/invoices/invoices';
 import { BrowserRouter, Route, Routes, Link } from 'react-router-dom';
-import AddressesPage from '../pages/addresses';
-import ContactPage from '../pages/contact';
+import AddressesPage from '../(pages)/addresses/addresses';
+import ContactPage from '../(pages)/contact/contact';
 import theme from '../styles/theme'
 
-import HomePage from '../pages/home';
-import StakeholderesPage from '../pages/stakeholders';
+import HomePage from '../(pages)/home';
+import StakeholderesPage from '../(pages)/stakeholders/stakeholders';
 
 const pages = ['Invoices', 'Addresses', 'Stakeholders', 'Contact'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
