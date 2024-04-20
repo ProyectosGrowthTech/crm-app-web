@@ -15,7 +15,7 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 
 
-interface AddAddressModalProps {
+interface InvoiceModalProps {
     open: boolean;
     onClose: () => void;
     handleSave: () => void;
@@ -45,7 +45,7 @@ const style = {
     p: 4,
 };
 
-const AddAddressModal: React.FC<AddAddressModalProps> = ({ open, onClose, handleSave, formData, handleChange, stakeholderList }) => {
+const InvoiceModal: React.FC<InvoiceModalProps> = ({ open, onClose, handleSave, formData, handleChange, stakeholderList }) => {
     const theme = useTheme();
 
     return (
@@ -210,4 +210,4 @@ const AddAddressModal: React.FC<AddAddressModalProps> = ({ open, onClose, handle
     );
 };
 
-export default AddAddressModal;
+export default InvoiceModal;

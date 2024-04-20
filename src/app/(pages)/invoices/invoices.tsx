@@ -5,18 +5,56 @@ import Box from '@mui/material/Box';
 import InvoiceModal from '../../components/modals/invoiceModal';
 import { ChangeEvent } from 'react';
 import BasicModal from "../../components/modal"
+import { postInvoice } from '../../api/invoice';
 import Button from '@mui/material/Button';
 import AddIcon from '@mui/icons-material/Add';
 import { Stakeholder } from '../../types/stakeholder';
-import { getStakeholders } from '../../api/stakeholder'
+import { getStakeholders } from '../../api/stakeholder';
+import { InvoiceDetails } from '../../types/invoiceDetails';
+
 
 const InvoicePage = () => {
   // Table component content goes here
   const [open, setOpen] = useState(false);
   const [showSuccessModal, setShowSuccessModal] = useState(false);
+  const [formData, setFormData] = useState({
+    invoiceDate: new Date(),
+    taxableAmount: null,
+    tax: null,
+    totalAmount: null,
+    status: '',
+    type: null,
+    stakeholderOriginId: '',
+    stakeholderDestinationId: null,
+    payment: null,
+  });
 
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+  const handleSave = async () => {
+      // See how to perform validation as interface do not match modal in this case
+      const newInvoice: InvoiceDetails = formData as InvoiceDetails;
+
+      const response = await postInvoice(newInvoice);
+      console.log(response);
+  
+      if (response) {
+        setShowSuccessModal(true);
+        // Clear the form data
+        setFormData({
+          invoiceDate: new Date(),
+          taxableAmount: null,
+          tax: null,
+          totalAmount: null,
+          status: '',
+          type: null,
+          stakeholderOriginId: '',
+          stakeholderDestinationId: null,
+          payment: null,
+        });
+        // handleClose();
+      }
+  };
 
   const theme = useTheme();
 
@@ -38,17 +76,6 @@ const InvoicePage = () => {
     fetchData();
   }, []);
 
-  const [formData, setFormData] = useState({
-    invoiceDate: new Date(),
-    taxableAmount: null,
-    tax: null,
-    totalAmount: null,
-    status: '',
-    type: null,
-    stakeholderOriginId: '',
-    stakeholderDestinationId: null,
-    payment: null,
-  });
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setFormData((prevFormData) => ({
@@ -56,6 +83,7 @@ const InvoicePage = () => {
       [e.target.name]: e.target.value
     }));
   };
+  
   return (
     <>
       <Typography variant="h5">
@@ -86,7 +114,7 @@ const InvoicePage = () => {
         stakeholderList={stakeholderList}
       />
       {showSuccessModal && (
-        <BasicModal message="Address inserted correctly" handleClose={() => setShowSuccessModal(false)} />
+        <BasicModal message="Invoice inserted correctly" handleClose={() => setShowSuccessModal(false)} />
       )}
       <InvoicesTable />
     </>
